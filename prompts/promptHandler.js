@@ -11,6 +11,7 @@ const initialPromptHandler = answer => {
             break;
         case 'Add a department':
             console.log(4);
+            break;
         case 'Add a role':
             console.log(5);
             break;
@@ -23,5 +24,9 @@ const initialPromptHandler = answer => {
         case 'Update an employee role':
             console.log(8);
             break;
+        default:
+            console.log('Err: answer does not match');
     }
 }
+
+module.exports = initialPromptHandler;

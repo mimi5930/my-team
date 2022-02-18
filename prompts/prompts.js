@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const handler = require('./promptHandler');
+const initialPromptHandler = require('./promptHandler');
 
 const initialQuestions = () => {
     return inquirer.prompt([
@@ -11,7 +11,7 @@ const initialQuestions = () => {
     }
     ])
     .then(answer => {
-        console.log(answer)
+        initialPromptHandler(answer);
     })
 }
 
