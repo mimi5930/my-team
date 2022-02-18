@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const handler = require('./promptHandler');
 
 const initialQuestions = () => {
     return inquirer.prompt([
@@ -9,6 +10,9 @@ const initialQuestions = () => {
         choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role']
     }
     ])
+    .then(answer => {
+        console.log(answer)
+    })
 }
 
 module.exports = initialQuestions;

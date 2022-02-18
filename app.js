@@ -24,6 +24,4 @@ An interactive employee
 }
 
 welcomeMessage();
-initialQuestions(answer => {
-    return console.log(answer);
-});
+initialQuestions();
