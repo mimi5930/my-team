@@ -31,6 +31,7 @@ const initialPromptHandler = answer => {
                 return res;
             })
         case 'Add a department':
+
             break;
         case 'Add a role':
             console.log(5);
