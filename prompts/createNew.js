@@ -7,11 +7,13 @@ const promptNewDepartment = () => {
             name: 'depName',
             message: 'What is the department name?'
         }
-    ]);
+    ])
+    .then(answers => {
+        console.log(answers);
+    });
 }
 
 const promptNewRole = () => {
-    let departmentTable = [];
     // add options for different departments
     return inquirer.prompt([
         {

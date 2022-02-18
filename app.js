@@ -16,5 +16,8 @@ An interactive employee
 welcomeMessage();
 initialQuestions()
 .then(answer => {
-  return initialPromptHandler(answer);
+  initialPromptHandler(answer);
+})
+.catch(err => {
+  console.log(err);
 });
