@@ -1,4 +1,6 @@
 const db = require('../db/connection');
+const table = require('../utils/createTable');
+
 
 const initialPromptHandler = answer => {
     switch (answer.initialChoice) {
@@ -8,17 +10,27 @@ const initialPromptHandler = answer => {
                     console.log(err);
                     return;
                 }
-                console.log(res);
+                return res;
             })
             break;
         case 'View all roles':
-            console.log(2);
+            db.query('SELECT * FROM role', (err, res) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                return res;
+            })
             break;
         case 'View all eployees':
-            console.log(3);
-            break;
+            db.query('SELECT * FROM employee', (err, res) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                return res;
+            })
         case 'Add a department':
-            console.log(4);
             break;
         case 'Add a role':
             console.log(5);
