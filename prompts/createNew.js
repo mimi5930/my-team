@@ -12,9 +12,9 @@ const promptNewDepartment = () => {
         }
     ])
     .then(answers => {
-        let { name } = answers;
-        let newDep = new 
-        console.log(answers);
+        let { depName } = answers;
+        let newDep = new Department(depName);
+        newDep.addtoDb();
     });
 }
 
