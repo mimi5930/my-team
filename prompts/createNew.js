@@ -1,5 +1,8 @@
 const inquirer = require("inquirer");
 const db = require('../db/connection');
+const Department = require('../lib/Department');
+const Employee = require('../lib/Employee');
+const Role = require('../lib/Role');
 
 const promptNewDepartment = () => {
     return inquirer.prompt([
@@ -9,12 +12,13 @@ const promptNewDepartment = () => {
         }
     ])
     .then(answers => {
+        let { name } = answers;
+        let newDep = new 
         console.log(answers);
     });
 }
 
 const promptNewRole = () => {
-    // add options for different departments
     return inquirer.prompt([
         {
             name: 'title',
@@ -26,7 +30,6 @@ const promptNewRole = () => {
         },
         {
             name: 'department',
-            // make this a list
             message: 'What department does the role belong to?'
         }
     ]);
