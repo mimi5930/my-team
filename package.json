@@ -19,7 +19,6 @@
   "homepage": "https://github.com/mimi5930/my-team#readme",
   "dependencies": {
     "console.table": "^0.10.0",
-    "dotenv": "^16.0.0",
     "inquirer": "^8.2.0",
     "mysql2": "^2.3.3"
   }

@@ -1,17 +1,7 @@
-// require('dotenv').config();
 // const cTable = require('console.table');
-// const db = require('./db/connection');
 const initialQuestions = require('./prompts/prompts');
-
-// function connectToDb() {
-//     db.connect(err => {
-//         if (err) {
-//             console.log(err);
-//             return false;
-//         };
-//         console.log('Employee Database connected!')
-//     })
-// }
+const initialPromptHandler = require('./prompts/promptHandler');
+// require('dotenv').config();
 
 welcomeMessage = () => {
 console.log(`
@@ -24,6 +14,7 @@ An interactive employee
 }
 
 welcomeMessage();
-initialQuestions(answer => {
-  console.log(answer);
+initialQuestions()
+.then(answer => {
+  return initialPromptHandler(answer);
 });

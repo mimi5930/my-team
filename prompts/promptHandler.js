@@ -1,7 +1,15 @@
+const db = require('../db/connection');
+
 const initialPromptHandler = answer => {
     switch (answer.initialChoice) {
         case 'View all departments':
-            console.log(1);
+            db.query('SELECT * FROM department', (err, res) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log(res);
+            })
             break;
         case 'View all roles':
             console.log(2);
