@@ -20,8 +20,7 @@ const promptHandler = (answer) => {
         return queryDb(query, 'Employees');
 
     } else if (choice === 'Add a department') {
-        promptNewDepartment();
-        return true;
+        return promptNewDepartment();
 
     } else if (choice === 'Add a role') {
         promptNewRole();

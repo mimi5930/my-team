@@ -14,7 +14,7 @@ const promptNewDepartment = () => {
     .then(answers => {
         let { depName } = answers;
         let newDep = new Department(depName);
-        newDep.addtoDb();
+        return newDep.addtoDb();
     });
 }
 

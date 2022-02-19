@@ -19,6 +19,7 @@ const initialQuestions = () => {
         }
         else {
             console.log('Goodbye!')
+            process.exit();
         }
     })
 }
