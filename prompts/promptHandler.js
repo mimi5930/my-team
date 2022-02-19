@@ -6,23 +6,18 @@ const queryDb = require('../utils/queryConstructor');
 
 const promptHandler = (answer) => {
     let choice = answer.choice;
+
     if (choice === 'View all departments') {
-        let query = 'SELECT * FROM department'
-        return queryDb(query, 'DEPARTMENT');
+        let query = 'SELECT * FROM department';
+        return queryDb(query, 'Departments');
     
     } else if (choice === 'View all roles') {
-        db.query('SELECT * FROM role', (err, res) => {
-            console.log('\nROLES\n')
-            console.table(res)
-        })
-        return true;
+        let query = 'SELECT * FROM role';
+        return queryDb(query, 'Roles');
 
     } else if (choice === 'View all employees') {
-        db.query('SELECT * FROM employee', (err, res) => {
-            console.log('\nEMPLOYEES\n')
-            console.table(res)
-        })
-        return true;
+        let query = 'SELECT * FROM employee';
+        return queryDb(query, 'Employees');
 
     } else if (choice === 'Add a department') {
         promptNewDepartment();

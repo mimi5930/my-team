@@ -10,8 +10,13 @@ const queryDb = (query, tableName) => {
         })
     })
     .then(res => {
-        console.log(`\n${tableName}\n`)
-        console.table(res);
+        console.log(`\n${tableName.toUpperCase()}\n`)
+        if (res.length === 0) {
+            console.log(`No data to display in ${tableName}\n`)
+        }
+        else {
+            console.table(res);
+        }
         return true;
     })
 }

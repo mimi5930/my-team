@@ -15,8 +15,7 @@ const initialQuestions = () => {
     })
     .then((newQuestions) => {
         if (newQuestions) {
-            console.log('NEW QESTIONS HERE!')
-            // initialQuestions();
+            initialQuestions();
         }
         else {
             console.log('Goodbye!')
