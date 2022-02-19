@@ -32,7 +32,12 @@ const promptNewRole = () => {
             name: 'department',
             message: 'What department does the role belong to?'
         }
-    ]);
+    ])
+    .then(answers => {
+        let { title, salary, department } = answers;
+        let newRole = new Role(title, salary, department);
+        newRole.addtoDb();
+    });
 }
 
 const promptNewEmployee = () => {
