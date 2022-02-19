@@ -36,7 +36,7 @@ const promptNewRole = () => {
     .then(answers => {
         let { title, salary, department } = answers;
         let newRole = new Role(title, salary, department);
-        newRole.addtoDb();
+        return newRole.addtoDb();
     });
 }
 
@@ -63,7 +63,7 @@ const promptNewEmployee = () => {
     .then(answers => {
         let { firstName, lastName, role, manager } = answers;
         let newEmployee = new Employee(firstName, lastName, role, manager);
-        newEmployee.addtoDb();
+        return newEmployee.addtoDb();
     });
 }
 

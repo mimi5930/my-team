@@ -23,12 +23,10 @@ const promptHandler = (answer) => {
         return promptNewDepartment();
 
     } else if (choice === 'Add a role') {
-        promptNewRole();
-        return true;
+        return promptNewRole();
 
     } else if (choice === 'Add an employee') {
-        promptNewEmployee();
-        return true;
+        return promptNewEmployee();
 
     } else if (choice === 'Update an employee') {
         // TODO: add an update function
