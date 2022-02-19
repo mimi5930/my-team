@@ -52,14 +52,19 @@ const promptNewEmployee = () => {
         },
         {
             name: 'role',
-            // make this a list
             message: `What is the employee's role?`
         },
         {
             name: 'manager',
+            // NEEDS to be a list! (input needs to be an integer)
             message: `Who is the employee's manager`
         }
-    ]);
+    ])
+    .then(answers => {
+        let { firstName, lastName, role, manager } = answers;
+        let newEmployee = new Employee(firstName, lastName, role, manager);
+        newEmployee.addtoDb();
+    });
 }
 
 module.exports = { promptNewDepartment, promptNewRole, promptNewEmployee }
