@@ -2,13 +2,12 @@ const db = require('../db/connection');
 const cTable = require('console.table');
 const { promptNewDepartment, promptNewRole, promptNewEmployee } = require('./createNew');
 
-
-const initialPromptHandler = answer => {
-    switch (answer.initialChoice) {
+const promptHandler = answer => {
+    switch (answer.choice) {
         case 'View all departments':
             db.query('SELECT * FROM department', (err, res) => {
                 if (err) throw err;
-                console.log('DEPARTMENTS')
+                console.log('\nDEPARTMENTS\n')
                 console.table(res)
             })
             break;
@@ -16,7 +15,7 @@ const initialPromptHandler = answer => {
         case 'View all roles':
             db.query('SELECT * FROM role', (err, res) => {
                 if (err) throw err;
-                console.log('ROLES')
+                console.log('\nROLES\n')
                 console.table(res)
             })
             break;
@@ -24,7 +23,7 @@ const initialPromptHandler = answer => {
         case 'View all employees':
             db.query('SELECT * FROM employee', (err, res) => {
                 if (err) throw err;
-                console.log('EMPLOYEES')
+                console.log('\nEMPLOYEES\n')
                 console.table(res)
             })
             break;
@@ -50,8 +49,11 @@ const initialPromptHandler = answer => {
             break;
 
         default:
-            console.log('Err: answer does not match');
+            console.log('Goodbye!')
+            break;
     }
 }
 
-module.exports = initialPromptHandler;
+
+
+module.exports = promptHandler;

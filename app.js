@@ -1,9 +1,6 @@
-// const cTable = require('console.table');
 const initialQuestions = require('./prompts/prompts');
-const initialPromptHandler = require('./prompts/promptHandler');
-// require('dotenv').config();
 
-welcomeMessage = () => {
+const welcomeMessage = () => {
 console.log(`
 ========================
   Welcome to My Team!
@@ -14,10 +11,4 @@ An interactive employee
 }
 
 welcomeMessage();
-initialQuestions()
-.then(answer => {
-  initialPromptHandler(answer);
-})
-.catch(err => {
-  console.log(err);
-});
+initialQuestions();
