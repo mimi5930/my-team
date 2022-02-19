@@ -1,7 +1,7 @@
 const initialQuestions = require('./prompts/prompts');
 
 const welcomeMessage = () => {
-console.log(`
+return console.log(`
 ========================
   Welcome to My Team!
 An interactive employee
@@ -11,4 +11,6 @@ An interactive employee
 }
 
 welcomeMessage();
-initialQuestions();
+initialQuestions(results => {
+  console.log(results)
+});

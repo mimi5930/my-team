@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const promptHandler = require('./promptHandler');
 
 const initialQuestions = () => {
-    inquirer.prompt([
+    return inquirer.prompt([
         {
             name: 'choice',
             type: 'list',
@@ -10,8 +10,17 @@ const initialQuestions = () => {
             choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Exit']
         }
     ])
-    .then(answer => {
-        promptHandler(answer);
+    .then((answer) => {
+        return promptHandler(answer)
+    })
+    .then((newQuestions) => {
+        if (newQuestions) {
+            console.log('NEW QESTIONS HERE!')
+            // initialQuestions();
+        }
+        else {
+            console.log('Goodbye!')
+        }
     })
 }
 

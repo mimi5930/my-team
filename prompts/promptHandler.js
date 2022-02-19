@@ -1,56 +1,51 @@
 const db = require('../db/connection');
 const cTable = require('console.table');
 const { promptNewDepartment, promptNewRole, promptNewEmployee } = require('./createNew');
+const queryDb = require('../utils/queryConstructor');
 
-const promptHandler = answer => {
-    switch (answer.choice) {
-        case 'View all departments':
-            db.query('SELECT * FROM department', (err, res) => {
-                if (err) throw err;
-                console.log('\nDEPARTMENTS\n')
-                console.table(res)
-            })
-            break;
 
-        case 'View all roles':
-            db.query('SELECT * FROM role', (err, res) => {
-                if (err) throw err;
-                console.log('\nROLES\n')
-                console.table(res)
-            })
-            break;
+const promptHandler = (answer) => {
+    let choice = answer.choice;
+    if (choice === 'View all departments') {
+        let query = 'SELECT * FROM department'
+        return queryDb(query, 'DEPARTMENT');
+    
+    } else if (choice === 'View all roles') {
+        db.query('SELECT * FROM role', (err, res) => {
+            console.log('\nROLES\n')
+            console.table(res)
+        })
+        return true;
 
-        case 'View all employees':
-            db.query('SELECT * FROM employee', (err, res) => {
-                if (err) throw err;
-                console.log('\nEMPLOYEES\n')
-                console.table(res)
-            })
-            break;
+    } else if (choice === 'View all employees') {
+        db.query('SELECT * FROM employee', (err, res) => {
+            console.log('\nEMPLOYEES\n')
+            console.table(res)
+        })
+        return true;
 
-        case 'Add a department':
-            promptNewDepartment();
-            break;
+    } else if (choice === 'Add a department') {
+        promptNewDepartment();
+        return true;
 
-        case 'Add a role':
-            promptNewRole();
-            break;
+    } else if (choice === 'Add a role') {
+        promptNewRole();
+        return true;
 
-        case 'Add an employee':
-            promptNewEmployee();
-            break;
+    } else if (choice === 'Add an employee') {
+        promptNewEmployee();
+        return true;
 
-        case 'Update an employee':
-            console.log(7);
-            break;
+    } else if (choice === 'Update an employee') {
+        // TODO: add an update function
+        return true;
 
-        case 'Update an employee role':
-            console.log(8);
-            break;
+    } else if (choice === 'Update an employee role') {
+        // TODO: add an update function
+        return true;
 
-        default:
-            console.log('Goodbye!')
-            break;
+    } else {
+        return false;
     }
 }
 
