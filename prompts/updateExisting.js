@@ -25,7 +25,6 @@ const updateEmployee = async () => {
     // store chosen employee's id
     let employeeIndex = employeeInfo.employeeArr.indexOf(employee.employeeName);
     let employeeId = employeeInfo.employeeId[employeeIndex];
-    console.log(employeeId);
 
     const rolesObj = await findRoles();
     let { rolesArr } = rolesObj;
@@ -41,13 +40,11 @@ const updateEmployee = async () => {
     ]);
     let roleIndex = roleInfo.rolesArr.indexOf(role.roleId);
     let roleId = roleInfo.roleId[roleIndex];
-    console.log("role id" +roleId)
     
     // get employee info
-    const foundEmployee = await findEmployee(roleId);
+    const foundEmployee = await findEmployee(employeeId);
     let {first_name, last_name, role_id, manager_id } = foundEmployee.pop();
     let newEmployee = new Employee(first_name, last_name, role_id, manager_id);
-    console.log(newEmployee)
     return newEmployee.updateRole(roleId, employeeId);
 }
 
