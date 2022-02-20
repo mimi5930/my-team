@@ -82,4 +82,18 @@ const findRoles = () => {
     })
 }
 
-module.exports = { queryDb, findEmployees, findEmployee, findRoles };
+// find departments and returns names
+const findDepartments = async () => {
+    const departments = await new Promise ((resolve, reject) => {
+        let query = 'select * from department'
+        db.query(query, (err, result) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(result)
+        })
+    })
+    return departments;
+}
+
+module.exports = { queryDb, findEmployees, findEmployee, findRoles, findDepartments };

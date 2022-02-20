@@ -3,6 +3,8 @@ const db = require('../db/connection');
 const Department = require('../lib/Department');
 const Employee = require('../lib/Employee');
 const Role = require('../lib/Role');
+const { findDepartments } = require("../utils/queryConstructor");
+
 
 const promptNewDepartment = () => {
     return inquirer.prompt([
@@ -18,8 +20,15 @@ const promptNewDepartment = () => {
     });
 }
 
-const promptNewRole = () => {
-    return inquirer.prompt([
+const promptNewRole = async () => {
+    const departments = await findDepartments();
+    let depArr = []
+    for (i = 0; i < departments.length; i++) {
+        let depName = departments[i].name;
+        depArr.push(depName)
+    };
+
+    const prompt = await inquirer.prompt([
         {
             name: 'title',
             message: 'What is name of the role?'
@@ -30,14 +39,19 @@ const promptNewRole = () => {
         },
         {
             name: 'department',
-            message: 'What department does the role belong to?'
+            type: 'list',
+            message: 'What department does the role belong to?',
+            choices: depArr
         }
     ])
-    .then(answers => {
-        let { title, salary, department } = answers;
-        let newRole = new Role(title, salary, department);
-        return newRole.addtoDb();
-    });
+
+    let searchArr = departments.filter(obj => {
+        return obj.name === prompt.department
+    })
+    let searchObj = searchArr.pop()
+    let { title, salary } = prompt;
+    let newRole = new Role(title, salary, searchObj.id);
+    return newRole.addtoDb();
 }
 
 const promptNewEmployee = () => {
