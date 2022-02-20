@@ -1,13 +1,13 @@
 const inquirer = require('inquirer');
-const { findEmployees, findRoles } = require('../utils/queryConstructor');
+const { findEmployees, findRoles, findEmployee } = require('../utils/queryConstructor');
 const Employee = require('../lib/Employee');
 const Role = require('../lib/Role');
 
-// holds employee info (used to escape promise hell)
-var employeeInfo = {};
-var roleInfo = {};
 
 const updateEmployee = async () => {
+    // holds db info
+    let employeeInfo;
+    let roleInfo;
 
     const employeeObj = await findEmployees();
     let { employeeArr } = employeeObj;
@@ -25,7 +25,7 @@ const updateEmployee = async () => {
     // store chosen employee's id
     let employeeIndex = employeeInfo.employeeArr.indexOf(employee.employeeName);
     let employeeId = employeeInfo.employeeId[employeeIndex];
-    employeeInfo = [{ employeeId: employeeId }];
+    console.log(employeeId);
 
     const rolesObj = await findRoles();
     let { rolesArr } = rolesObj;
@@ -41,11 +41,14 @@ const updateEmployee = async () => {
     ]);
     let roleIndex = roleInfo.rolesArr.indexOf(role.roleId);
     let roleId = roleInfo.roleId[roleIndex];
-    roleInfo = { roleId: roleId };
+    console.log("role id" +roleId)
     
-    // get employee and role info
-    
-
+    // get employee info
+    const foundEmployee = await findEmployee(roleId);
+    let {first_name, last_name, role_id, manager_id } = foundEmployee.pop();
+    let newEmployee = new Employee(first_name, last_name, role_id, manager_id);
+    console.log(newEmployee)
+    return newEmployee.updateRole(roleId, employeeId);
 }
 
 module.exports = updateEmployee;

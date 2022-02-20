@@ -21,6 +21,19 @@ const queryDb = (query, tableName) => {
     })
 }
 
+const findEmployee = async (id) => {
+    const employee = await new Promise((resolve, reject) => {
+        let query = 'SELECT * FROM employee WHERE id = ?'
+        db.query(query, id, (err, result) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(result)
+        })
+    })
+    return employee;
+} 
+
 // return an array of all employees
 const findEmployees = () => {
     return new Promise((resolve, reject) => {
@@ -69,4 +82,4 @@ const findRoles = () => {
     })
 }
 
-module.exports = { queryDb, findEmployees, findRoles };
+module.exports = { queryDb, findEmployees, findEmployee, findRoles };
