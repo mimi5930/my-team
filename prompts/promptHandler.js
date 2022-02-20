@@ -1,7 +1,8 @@
 const db = require('../db/connection');
 const cTable = require('console.table');
 const { promptNewDepartment, promptNewRole, promptNewEmployee } = require('./createNew');
-const queryDb = require('../utils/queryConstructor');
+const updateEmployee = require('./updateExisting');
+const { queryDb } = require('../utils/queryConstructor');
 
 
 const promptHandler = (answer) => {
@@ -29,8 +30,7 @@ const promptHandler = (answer) => {
         return promptNewEmployee();
 
     } else if (choice === 'Update an employee role') {
-        // TODO: add an update function
-        return true;
+        return updateEmployee();
 
     } else {
         return false;
