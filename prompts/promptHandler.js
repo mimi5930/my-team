@@ -28,10 +28,6 @@ const promptHandler = (answer) => {
     } else if (choice === 'Add an employee') {
         return promptNewEmployee();
 
-    } else if (choice === 'Update an employee') {
-        // TODO: add an update function
-        return true;
-
     } else if (choice === 'Update an employee role') {
         // TODO: add an update function
         return true;
