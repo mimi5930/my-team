@@ -10,7 +10,16 @@ const promptNewDepartment = () => {
     return inquirer.prompt([
         {
             name: 'depName',
-            message: 'What is the department name?'
+            message: 'What is the department name?',
+            validate: depName => {
+                if (!depName) {
+                    console.log('Please enter a name for the department!')
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
         }
     ])
     .then(answers => {
@@ -96,11 +105,30 @@ const promptNewEmployee = async () => {
     const prompt = await inquirer.prompt([
         {
             name: 'firstName',
-            message: `What is the employee's first name?`
+            message: `What is the employee's first name?`,
+            validate: firstName => {
+                if(!firstName) {
+                    console.log('Please enter the employees first name!')
+                    return false;
+                } else if (firstName.contains(' ')) {
+                    console.log("Please leave no spaces in the employee's first name")
+                    return false;
+                } else {
+                    return true;
+                }
+            }
         },
         {
             name: 'lastName',
-            message: `What is the employee's last name?`
+            message: `What is the employee's last name?`,
+            validate: lastName => {
+                if (!lastName) {
+                    console.log("Please enter the employee's last name")
+                    return false;
+                } else {
+                    return true;
+                }
+            }
         },
         {
             name: 'role',
