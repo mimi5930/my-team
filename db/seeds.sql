@@ -1,7 +1,7 @@
 INSERT INTO department (name)
 VALUES 
 ('Food'),
-('GM'),
+('General Merchandise'),
 ('Front'),
 ('Leadership');
 
@@ -13,7 +13,6 @@ VALUES
 ('produce', 24000.00, 1),
 ('meat', 24000.00, 2),
 ('frozen', 26000.00, 1),
-('ETL', 40000.50, 4);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES

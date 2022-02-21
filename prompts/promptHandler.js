@@ -13,9 +13,8 @@ const promptHandler = (answer) => {
     } else if (choice === 'View all roles') {
         let query = 'SELECT role.id, role.title, department.name AS department, role.salary FROM role JOIN department ON role.department_id = department.id ORDER BY role.id';
         return queryDb(query, 'Roles');
-
     } else if (choice === 'View all employees') {
-        let query = 'SELECT * FROM employee';
+        let query = 'SELECT A.id, A.first_name, A.last_name, role.title AS title, department.name AS department, role.salary AS salary, CONCAT(B.first_name, " ", B.last_name) AS manager FROM employee A LEFT JOIN employee B ON A.manager_id = B.id LEFT JOIN role ON A.role_id = role.id LEFT JOIN department ON department_id = department.id';
         return queryDb(query, 'Employees');
 
     } else if (choice === 'Add a department') {
