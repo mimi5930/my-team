@@ -27,7 +27,8 @@ CREATE TABLE employee (
 SELECT role.id, role.title, department.name AS department, role.salary
 FROM role
 JOIN department
-ON role.department_id = department.id;
+ON role.department_id = department.id
+ORDER BY role.id;
 
 SELECT employee.id, employee.first_name, employee.last_name, role.title AS title, department.name AS department, role.salary AS salary, employee.manager_id
 FROM employee

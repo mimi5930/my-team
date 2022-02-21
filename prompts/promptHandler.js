@@ -11,7 +11,7 @@ const promptHandler = (answer) => {
         return queryDb(query, 'Departments');
     
     } else if (choice === 'View all roles') {
-        let query = 'SELECT role.id, role.title, department.name AS department, role.salary FROM role JOIN department ON role.department_id = department.id';
+        let query = 'SELECT role.id, role.title, department.name AS department, role.salary FROM role JOIN department ON role.department_id = department.id ORDER BY role.id';
         return queryDb(query, 'Roles');
 
     } else if (choice === 'View all employees') {

@@ -1,8 +1,8 @@
 const db = require('../db/connection');
 const cTable = require('console.table');
 
-const queryDb = (query, tableName) => {
-    return new Promise((resolve, reject) => {
+const queryDb = async (query, tableName) => {
+    const queryResults = await new Promise((resolve, reject) => {
         db.query(query, (err, res) => {
             if (err) {
                 return reject(err)
@@ -10,16 +10,13 @@ const queryDb = (query, tableName) => {
             resolve(res)
         })
     })
-    .then(res => {
-        console.log(`\n${tableName.toUpperCase()}\n`)
-        if (res.length === 0) {
-            console.log(`No data to display in ${tableName}\n`)
-        }
-        else {
-            console.table(res);
-        }
-        return true;
-    })
+    console.log(`\n${tableName.toUpperCase()}\n`)
+    if (queryResults.length === 0) {
+        console.log(`No data to display in ${tableName}\n`)
+    } else {
+        console.table(queryResults);
+    }
+    return true;
 }
 
 const findEmployee = async (id) => {
@@ -36,51 +33,47 @@ const findEmployee = async (id) => {
 } 
 
 // return an array of all employees
-const findEmployees = () => {
-    return new Promise((resolve, reject) => {
+const findEmployees = async () => {
+    const queryResults = await new Promise((resolve, reject) => {
         let query = 'SELECT * FROM employee'
         db.query(query, (err, results) => {
             if (err) {
-                return reject(err);
+                reject(err);
             }
             resolve(results);
         })
     })
-    .then(results => {
-        let employeeArr = [];
-        let employeeId = [];
-        for (i = 0; i < results.length; i++) {
-            let employee = `${results[i].first_name} ${results[i].last_name}`
-            let id = results[i].id;
-            employeeArr.push(employee);
-            employeeId.push(id);
-        }
-        return { employeeArr, employeeId };
-    })
+    let employeeArr = [];
+    let employeeId = [];
+    for (i = 0; i < queryResults.length; i++) {
+        let employee = `${queryResults[i].first_name} ${queryResults[i].last_name}`
+        let id = queryResults[i].id;
+        employeeArr.push(employee);
+        employeeId.push(id);
+    }
+    return { employeeArr, employeeId };
 }
 
 // return an array of roles
-const findRoles = () => {
-    return new Promise((resolve, reject) => {
+const findRoles = async () => {
+    const queryResults = await new Promise((resolve, reject) => {
         let query = 'SELECT * FROM  role'
         db.query(query, (err, results) => {
             if (err) {
-                return reject(err);
+                reject(err);
             }
             resolve(results)
         })
     })
-    .then(results => {
-        let rolesArr = [];
-        let roleId = [];
-        for (i = 0; i < results.length; i++) {
-            let roleName = results[i].title;
-            let id = results[i].id;
-            rolesArr.push(roleName);
-            roleId.push(id);
-        }
-        return { rolesArr, roleId };
-    })
+    let rolesArr = [];
+    let roleId = [];
+    for (i = 0; i < queryResults.length; i++) {
+        let roleName = queryResults[i].title;
+        let id = queryResults[i].id;
+        rolesArr.push(roleName);
+        roleId.push(id);
+    }
+    return { rolesArr, roleId };
 }
 
 // find departments and returns names

@@ -5,8 +5,8 @@ const Role = require('../lib/Role');
 const { findDepartments, findAllRoles, findManagers } = require("../utils/queryConstructor");
 
 
-const promptNewDepartment = () => {
-    return inquirer.prompt([
+const promptNewDepartment = async () => {
+    const prompt = await inquirer.prompt([
         {
             name: 'depName',
             message: 'What is the department name?',
@@ -21,11 +21,9 @@ const promptNewDepartment = () => {
 
         }
     ])
-    .then(answers => {
-        let { depName } = answers;
-        let newDep = new Department(depName);
-        return newDep.addtoDb();
-    });
+    let { depName } = prompt;
+    let newDep = new Department(depName);
+    return newDep.addtoDb();
 }
 
 const promptNewRole = async () => {
@@ -56,7 +54,7 @@ const promptNewRole = async () => {
                 if (!salary) {
                     console.log('Please enter a salary!')
                     return false;
-                } else if (typeof salary !== 'number') {
+                } else if (!parseInt(salary)) {
                     console.log('Please enter a number')
                     return false;
                 } else {
