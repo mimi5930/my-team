@@ -1,7 +1,6 @@
 const inquirer = require('inquirer');
 const { findEmployees, findRoles, findEmployee } = require('../utils/queryConstructor');
 const Employee = require('../lib/Employee');
-const Role = require('../lib/Role');
 
 
 const updateEmployee = async () => {

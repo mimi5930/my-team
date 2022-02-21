@@ -1,5 +1,4 @@
 const inquirer = require("inquirer");
-const db = require('../db/connection');
 const Department = require('../lib/Department');
 const Employee = require('../lib/Employee');
 const Role = require('../lib/Role');
@@ -110,7 +109,7 @@ const promptNewEmployee = async () => {
                 if(!firstName) {
                     console.log('Please enter the employees first name!')
                     return false;
-                } else if (firstName.contains(' ')) {
+                } else if (firstName.includes(' ')) {
                     console.log("Please leave no spaces in the employee's first name")
                     return false;
                 } else {
