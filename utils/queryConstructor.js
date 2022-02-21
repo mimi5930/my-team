@@ -85,7 +85,7 @@ const findRoles = () => {
 // find departments and returns names
 const findDepartments = async () => {
     const departments = await new Promise ((resolve, reject) => {
-        let query = 'select * from department'
+        let query = 'SELECT * FROM department'
         db.query(query, (err, result) => {
             if (err) {
                 reject(err)
@@ -96,4 +96,30 @@ const findDepartments = async () => {
     return departments;
 }
 
-module.exports = { queryDb, findEmployees, findEmployee, findRoles, findDepartments };
+const findAllRoles = async () => {
+    const roles = await new Promise ((resolve, reject) => {
+        let query = 'SELECT * FROM role';
+        db.query(query, (err, result) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(result)
+        })
+    })
+    return roles;
+}
+
+const findManagers = async () => {
+    const managers = await new Promise ((resolve, reject) => {
+        let query = 'SELECT * FROM employee WHERE manager_id IS NULL';
+        db.query(query, (err, result) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(result)
+        })
+    })
+    return managers;
+}
+
+module.exports = { queryDb, findEmployees, findEmployee, findRoles, findDepartments, findAllRoles, findManagers };

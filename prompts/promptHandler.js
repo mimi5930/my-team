@@ -1,5 +1,3 @@
-const db = require('../db/connection');
-const cTable = require('console.table');
 const { promptNewDepartment, promptNewRole, promptNewEmployee } = require('./createNew');
 const updateEmployee = require('./updateExisting');
 const { queryDb } = require('../utils/queryConstructor');

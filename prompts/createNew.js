@@ -3,7 +3,7 @@ const db = require('../db/connection');
 const Department = require('../lib/Department');
 const Employee = require('../lib/Employee');
 const Role = require('../lib/Role');
-const { findDepartments } = require("../utils/queryConstructor");
+const { findDepartments, findAllRoles, findManagers } = require("../utils/queryConstructor");
 
 
 const promptNewDepartment = () => {
@@ -50,12 +50,31 @@ const promptNewRole = async () => {
     })
     let searchObj = searchArr.pop()
     let { title, salary } = prompt;
+
     let newRole = new Role(title, salary, searchObj.id);
     return newRole.addtoDb();
 }
 
-const promptNewEmployee = () => {
-    return inquirer.prompt([
+const promptNewEmployee = async () => {
+    const roles = await findAllRoles();
+    let roleArr = []
+    for (i = 0; i < roles.length; i++) {
+        let roleName = roles[i].title;
+        roleArr.push(roleName);
+    }
+    
+    let hasManagers = true;
+    const managerList = await findManagers();
+    let managerArr = [];
+    for (i = 0; i < managerList.length; i++) {
+        let managerName = `${managerList[i].first_name} ${managerList[i].last_name}`;
+        managerArr.push(managerName);
+    }
+    if (managerArr.length === 0) {
+        hasManagers = false;
+    }
+
+    const prompt = await inquirer.prompt([
         {
             name: 'firstName',
             message: `What is the employee's first name?`
@@ -66,19 +85,65 @@ const promptNewEmployee = () => {
         },
         {
             name: 'role',
-            message: `What is the employee's role?`
+            type: 'list',
+            message: `What is the employee's role?`,
+            choices: roleArr
         },
         {
-            name: 'manager',
-            // NEEDS to be a list! (input needs to be an integer)
-            message: `Who is the employee's manager`
+            name: 'isManager',
+            type: 'confirm',
+            message: 'Is this employee a manager?',
+            default: false
         }
     ])
-    .then(answers => {
-        let { firstName, lastName, role, manager } = answers;
-        let newEmployee = new Employee(firstName, lastName, role, manager);
+
+    // handle role data
+    let filteredRoleArr = roles.filter(obj => {
+        return obj.title === prompt.role
+    })
+    let roleObj = filteredRoleArr.pop();
+    
+
+    
+    // handle manager data
+    if (!hasManagers && !prompt.isManager) {
+        console.log('\nPlease add a manager first!\n')
+        return true;
+    }
+
+    let managerNameChoice;
+    if (!prompt.isManager) {
+        const prompt = await inquirer.prompt([
+            {
+                name: 'manager',
+                type: 'list',
+                message: "Who is the employee's manager?",
+                choices: managerArr
+            }
+        ])
+        managerNameChoice = prompt;
+    }    
+
+    // create employee as a manager
+    if (prompt.isManager) {
+        let { firstName, lastName } = prompt;
+        let newManager = new Employee(firstName, lastName, roleObj.id, null);
+        return newManager.addtoDb();
+    } else {
+        // handle manager choice
+        let filteredManagerArr = managerList.filter(obj => {
+            let managerSplit = managerNameChoice.manager.split(' ');
+            let managerFirst = managerSplit[0];
+            return obj.first_name === managerFirst;
+        })
+        let managerObj = filteredManagerArr.pop();
+
+
+        // create employee as a non-manager
+        let { firstName, lastName, } = prompt;
+        let newEmployee = new Employee(firstName, lastName, roleObj.id, managerObj.id);
         return newEmployee.addtoDb();
-    });
+    }
 }
 
 module.exports = { promptNewDepartment, promptNewRole, promptNewEmployee }
