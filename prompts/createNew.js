@@ -31,11 +31,30 @@ const promptNewRole = async () => {
     const prompt = await inquirer.prompt([
         {
             name: 'title',
-            message: 'What is name of the role?'
+            message: 'What is name of the role?',
+            validate: titleInput => {
+                if (titleInput) {
+                    return true;
+                } else {
+                    console.log('Please enter a name!');
+                    return false;
+                }
+            }
         },
         {
             name: 'salary',
-            message: 'What is the salary of the role?'
+            message: 'What is the salary of the role?',
+            validate: salary => {
+                if (!salary) {
+                    console.log('Please enter a salary!')
+                    return false;
+                } else if (typeof salary !== 'number') {
+                    console.log('Please enter a number')
+                    return false;
+                } else {
+                    return true;
+                }
+            }
         },
         {
             name: 'department',

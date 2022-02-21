@@ -23,3 +23,17 @@ CREATE TABLE employee (
     role_id INT,
     manager_id INT
 );
+
+SELECT role.id, role.title, department.name AS department, role.salary
+FROM role
+JOIN department
+ON role.department_id = department.id;
+
+SELECT employee.id, employee.first_name, employee.last_name, role.title AS title, department.name AS department, role.salary AS salary, employee.manager_id
+FROM employee
+LEFT JOIN role
+ON employee.role_id = role.id 
+LEFT JOIN department
+ON department_id = department.id
+RIGHT JOIN employee
+ON employee.manager_id = employee.id
